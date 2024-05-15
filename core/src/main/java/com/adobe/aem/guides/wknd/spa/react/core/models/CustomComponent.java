@@ -6,4 +6,6 @@ public interface CustomComponent extends ComponentExporter{
 
     public String getMessage();
 
+    public String getBrand();
+
 }

@@ -1,5 +1,9 @@
 import React from "react";
 import { EditableComponent, MapTo } from "@adobe/aem-react-editable-components";
+import SevenCustom from "./seven-custom.js";
+import QiddiyaCustom from "./qiddiya-custom.js";
+
+require("./Custom.scss");
 
 export const CustomEditConfig = {
   emptyLabel: "Custom",
@@ -16,7 +20,9 @@ const Custom = (props) => {
 
   return (
     <div className="CustomComponent">
-      <h2 className="CustomComponent__message">{props.message}</h2>
+      {props.brand == "seven" ? <SevenCustom {...props}/> : <QiddiyaCustom {...props}/> }
+      {console.log(props)}
+      {console.log("Brand --> " + props.brand)}
     </div>
   );
 };

@@ -17,11 +17,19 @@ public class CustomComponentImpl implements CustomComponent {
     @ValueMapValue
     private String message;
 
+    @ValueMapValue
+    private String brand;
+
     static final String RESOURCE_TYPE = "wknd-spa-react/components/custom-component";
 
     @Override
     public String getMessage() {
         return StringUtils.isNotBlank(message) ? message.toUpperCase() : null;
+    }
+
+    @Override
+    public String getBrand(){
+        return StringUtils.isNotBlank(brand) ? brand : null;
     }
 
     @Override
