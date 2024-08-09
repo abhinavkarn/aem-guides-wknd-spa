@@ -4,16 +4,19 @@ import com.adobe.aem.guides.wknd.spa.react.core.services.GeminiAPIService;
 import com.adobe.aem.guides.wknd.spa.react.core.services.HTTPClient;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.component.annotations.Activate;
 
 import java.io.IOException;
 
-@Component(service = GeminiAPIService.class)
+@Component(service = GeminiAPIService.class, immediate = true)
+@Designate(ocd = GeminiConfig.class)
 public class GeminiAPIServiceImpl implements GeminiAPIService {
 
     @Reference
     private HTTPClient httpClient;
 
-    final String GEMINI_URI = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDiLLehJXY7hQ-25vJuibkZ9TzFsIjMNRg";
+    private String GEMINI_URI = "";
 
     String requestStructure = "{\n" +
             "  \"contents\":[\n" +
@@ -30,6 +33,11 @@ public class GeminiAPIServiceImpl implements GeminiAPIService {
             "    }\n" +
             "  ]\n" +
             "}";
+
+    @Activate
+    public final void activate (final GeminiConfig configuration) {
+        GEMINI_URI = configuration.geminiUrl().concat(configuration.geminiKey());
+    }
 
     @Override
     public String sendDetailsToAPI (String base64Image ) throws IOException {
