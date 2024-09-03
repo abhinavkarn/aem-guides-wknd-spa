@@ -36,6 +36,7 @@ public class UpdateMetadataGeminiAPI implements WorkflowProcess {
         String title = "";
         String desc = "";
         String keywords = "";
+        String[] keywordArray = new String[]{""};
 
         if (workflowData.getPayloadType().equals(TYPE_JCR_PATH)) {
             String path = workflowData.getPayload().toString();
@@ -53,6 +54,10 @@ public class UpdateMetadataGeminiAPI implements WorkflowProcess {
                 title = metaArray[1].split(":")[1].replaceAll("\\**","");
                 desc = metaArray[2].split(":")[1].replaceAll("\\**","");
                 keywords = metaArray[3].split(":")[1].replaceAll("\\**","");
+                keywordArray = keywords.split(",");
+                for (int i = 0; i < keywordArray.length; i++) {
+                    keywordArray[i] = keywordArray[i].trim();
+                }
 
             } catch (IOException | JSONException e) {
                 throw new RuntimeException(e);
@@ -64,7 +69,7 @@ public class UpdateMetadataGeminiAPI implements WorkflowProcess {
                 if (node != null) {
                     node.setProperty("dc:title", title);
                     node.setProperty("dc:description", desc);
-                    node.setProperty("dam:search_promote", keywords);
+                    node.setProperty("dam:search_promote", keywordArray);
                     jcrSession.save();
                 }
             } catch (RepositoryException e) {
