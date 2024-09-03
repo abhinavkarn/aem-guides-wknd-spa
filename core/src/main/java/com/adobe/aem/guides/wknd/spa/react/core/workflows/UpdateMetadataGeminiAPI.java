@@ -60,11 +60,11 @@ public class UpdateMetadataGeminiAPI implements WorkflowProcess {
             try {
                 Session jcrSession = session.adaptTo(Session.class);
                 assert jcrSession != null;
-                Node node = (Node) jcrSession.getItem(path +"/jcr:content");
+                Node node = (Node) jcrSession.getItem(path +"/jcr:content/metadata");
                 if (node != null) {
-                    node.setProperty("title", title);
-                    node.setProperty("description", desc);
-                    node.setProperty("keywords", keywords);
+                    node.setProperty("dc:title", title);
+                    node.setProperty("dc:description", desc);
+                    node.setProperty("dam:search_promote", keywords);
                     jcrSession.save();
                 }
             } catch (RepositoryException e) {

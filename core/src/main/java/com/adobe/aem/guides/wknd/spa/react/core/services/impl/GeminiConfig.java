@@ -20,5 +20,5 @@ public @interface GeminiConfig {
             name = "API Key",
             description = "Gemini API Key"
     )
-    String geminiKey() default "";
+    String geminiKey() default "AIzaSyDiLLehJXY7hQ-25vJuibkZ9TzFsIjMNRg";
 }
